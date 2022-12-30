@@ -14,22 +14,34 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.template.defaulttags import url
 from django.urls import path, re_path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve
 from django.conf.urls.i18n import i18n_patterns
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-    TokenVerifyView,
-    TokenBlacklistView
-)
 from rest_framework.permissions import AllowAny
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+#admin
+urlpatterns = [
+    path("i18n/", include("django.conf.urls.i18n")),
+    
+]
+urlpatterns += i18n_patterns(path("admin/", admin.site.urls))
+
+#language
+urlpatterns += [*i18n_patterns(path('', include('agrozamin_hr.urls')), prefix_default_language=False),]
+
+#static files root
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += [re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT,}),]
+
+
+#Swagger
 schema_view = get_schema_view(
     openapi.Info(
         title= 'HR-Agrozamin',
@@ -39,28 +51,6 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=(AllowAny,)
 )
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('agrozamin_hr.urls'))
-]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += [re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT,}),]
-
-#language
-urlpatterns += [*i18n_patterns(*urlpatterns, prefix_default_language=False),]
-
-#JWT
-urlpatterns += [
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
-]
-
-#Swagger
 urlpatterns += [
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-docs'),
-    path('drf-auth/', include('rest_framework.urls')),
 ]
