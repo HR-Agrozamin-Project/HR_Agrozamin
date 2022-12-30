@@ -1,5 +1,7 @@
-from .models import Category, Question, ExtraCategory, ExtraQuestion
-from modeltranslation.translator import TranslationOptions,register,translator
+from agrozamin_hr.models.questions import Question, ExtraQuestion
+from agrozamin_hr.models.categories import Category, ExtraCategory
+from modeltranslation.translator import TranslationOptions,register
+
 
 @register(Category)
 class CategoryTranslationOptions(TranslationOptions):

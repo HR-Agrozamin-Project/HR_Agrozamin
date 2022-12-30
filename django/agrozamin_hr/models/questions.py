@@ -1,13 +1,7 @@
 from django.db import models
+from agrozamin_hr.models.categories import Category, ExtraCategory
+from django.utils.translation import gettext_lazy as _
 
-class Category(models.Model):
-    category_name = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.category_name
-    class Meta:
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
 
 class Question(models.Model):
     question = models.TextField()
@@ -18,20 +12,13 @@ class Question(models.Model):
     ans = models.CharField(max_length=200,null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     
-    class Meta:
-        verbose_name = 'Question'
-        verbose_name_plural = 'Questions'
-
-
-class ExtraCategory(models.Model):
-    extra_category_name = models.CharField(max_length=200)
-
     def __str__(self):
-        return self.extra_category_name
+        return self.question
 
     class Meta:
-        verbose_name = 'Extra category'
-        verbose_name_plural = 'Extra categories'
+        verbose_name = _(u'Savol')
+        verbose_name_plural = _(u'Savollar')
+
 
 class ExtraQuestion(models.Model):
     question = models.TextField()
@@ -42,6 +29,9 @@ class ExtraQuestion(models.Model):
     ans = models.CharField(max_length=200,null=True)
     extra_category = models.ForeignKey(ExtraCategory, on_delete=models.CASCADE)
     
+    def __str__(self):
+        return self.question
+        
     class Meta:
-        verbose_name = 'Extra question'
-        verbose_name_plural = 'Extra questions'
+        verbose_name = _(u"Qo'shimcha savol")
+        verbose_name_plural = _("Qo'shimcha savollar")

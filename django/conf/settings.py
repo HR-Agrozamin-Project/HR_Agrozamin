@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# AUTH_USER_MODEL = 'agrozamin_hr.UserModel'
 
 # Application definition
 
@@ -49,9 +50,13 @@ INSTALLED_APPS = [
     #django-rest
     'drf_yasg',
     'rest_framework',
-    'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
+    # 'rest_framework_simplejwt',
+    # 'rest_framework_simplejwt.token_blacklist',
 ]
+
+
+AUTH_USER_MODEL = 'agrozamin_hr.User_admin'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,7 +74,7 @@ ROOT_URLCONF = 'conf.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [str(BASE_DIR.joinpath('templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,27 +130,25 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 #language settings
-
-LANGUAGES = (
-    ('ru','Russian'),
-    ('uz','Uzbek'),
-)
-
-LOCALE_PATHS = [
-    BASE_DIR / 'locale/',
-]
-
-# MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
-MODELTRANSLATION_LANGUAGES = ('ru', 'uz')
-# MODELTRANSLATION_FALLBACK_LANGUAGES = ('ru', 'uz')
-
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'uz-ru'
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_TZ = True
+
+LANGUAGES = (
+    ('ru','Russian'),
+    ('uz','Uzbek'),
+)
+MODELTRANSLATION_LANGUAGES = ('ru', 'uz')
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
+
+
 
 
 # Static files (CSS, JavaScript, Images)

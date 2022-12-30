@@ -1,0 +1,131 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-30 17:19+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\agrozamin_hr\admin.py:13
+#, fuzzy
+
+msgid "HR-Agrozamin"
+msgstr "HR-Агрозамин"
+
+#: .\agrozamin_hr\admin.py:14
+msgid "Agrobank ma'muriyati portali"
+msgstr "Портал администрации Агробанк"
+
+#: .\agrozamin_hr\admin.py:15
+msgid "HR-Agrozamin portaliga xush kelibsiz"
+msgstr "Добро пожаловать на Портал HR-Агрозамин"
+
+#: .\agrozamin_hr\models\categories.py:11
+msgid "Kategoriya"
+msgstr "Категория"
+
+#: .\agrozamin_hr\models\categories.py:12
+msgid "Kategoriyalar"
+msgstr "Категории"
+
+#: .\agrozamin_hr\models\categories.py:22
+msgid "Qo'shimcha kategoriya"
+msgstr "Дополнительная категория"
+
+#: .\agrozamin_hr\models\categories.py:23
+msgid "Qo'shimcha kategoriyalar"
+msgstr "Дополнительные категории"
+
+#: .\agrozamin_hr\models\questions.py:19
+msgid "Savol"
+msgstr "Вопрос"
+
+#: .\agrozamin_hr\models\questions.py:20
+msgid "Savollar"
+msgstr "Вопросы"
+
+#: .\agrozamin_hr\models\questions.py:36
+msgid "Qo'shimcha savol"
+msgstr "Дополнительный вопрос"
+
+#: .\agrozamin_hr\models\questions.py:37
+msgid "Qo'shimcha savollar"
+msgstr "Дополнительные вопросы"
+
+#: .\agrozamin_hr\models\regions.py:11
+msgid "Shahar"
+msgstr "Город"
+
+#: .\agrozamin_hr\models\regions.py:12
+msgid "Shaharlar"
+msgstr "Города"
+
+#: .\agrozamin_hr\models\regions.py:27
+msgid "Tuman"
+msgstr "Район"
+
+#: .\agrozamin_hr\models\regions.py:28
+msgid "Tumanlar"
+msgstr "Районы"
+
+#: .\agrozamin_hr\models\user_admin.py:6
+msgid "Administrator"
+msgstr "Администратор"
+
+#: .\agrozamin_hr\models\user_admin.py:7
+msgid "Administratorlar"
+msgstr "Администраторы"
+
+#: .\agrozamin_hr\models\usermodel.py:17
+msgid "Erkak"
+msgstr "Мужчина"
+
+#: .\agrozamin_hr\models\usermodel.py:18
+msgid "Ayol"
+msgstr "Женщина"
+
+#: .\agrozamin_hr\models\usermodel.py:21
+msgid "O'rta"
+msgstr ""
+
+#: .\agrozamin_hr\models\usermodel.py:22
+msgid "o'rta maxsus"
+msgstr ""
+
+#: .\agrozamin_hr\models\usermodel.py:23
+msgid "Oliy tugallanmagan"
+msgstr ""
+
+#: .\agrozamin_hr\models\usermodel.py:24
+msgid "Oliy"
+msgstr ""
+
+#: .\agrozamin_hr\models\usermodel.py:25
+msgid "Magistr"
+msgstr ""
+
+#: .\agrozamin_hr\models\usermodel.py:26
+msgid "PhD"
+msgstr "PhD"
+
+#: .\agrozamin_hr\models\usermodel.py:65
+msgid "Foydalanuvchi"
+msgstr "Пользователь"
+
+#: .\agrozamin_hr\models\usermodel.py:66
+msgid "Foydalanuvchilar"
+msgstr "Пользователи"
