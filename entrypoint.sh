@@ -15,7 +15,7 @@ fi
 sleep 10
 
 echo "Apply database migrations"
-python manage.py migrate
+python3 manage.py migrate
 
 echo "collectstatic"
 python3 manage.py collectstatic
