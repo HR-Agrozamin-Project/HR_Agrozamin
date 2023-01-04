@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from agrozamin_hr.models.categories import Category, ExtraCategory
-from agrozamin_hr.models.regions import Region, City
 from django.utils.translation import gettext_lazy as _
 import os
 
@@ -33,11 +32,6 @@ class Choice:
         _46 = '46-...' 
 
 
-# def photo_path(instance, filename, first_name, last_name):
-#     basefilename, file_extension= os.path.splitext(filename)
-#     print(basefilename, file_extension)
-#     return f'media/cv_files/{first_name}_{last_name}'
-
 
 class UserModel(models.Model):
     chat_id = models.PositiveIntegerField(unique=True)
@@ -47,7 +41,6 @@ class UserModel(models.Model):
     gender = gender = models.CharField(max_length=10, choices=Choice.Genders.choices)
     education = models.CharField(max_length=30, choices=Choice.Education.choices)
     age = models.CharField(max_length=10, choices=Choice.Age.choices)
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
     program_language = models.ForeignKey(Category, on_delete=models.CASCADE)
     extra_skill=models.ManyToManyField(ExtraCategory, blank=True)
     cv = models.FileField(upload_to='cv_files')
@@ -56,10 +49,6 @@ class UserModel(models.Model):
     def __str__(self):
         return self.first_name
     
-    
-    @property
-    def region(self):
-        return self.city.city_name
 
     class Meta:
         verbose_name = _(u'Foydalanuvchi')

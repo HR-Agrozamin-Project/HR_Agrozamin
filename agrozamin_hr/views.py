@@ -13,17 +13,6 @@ import os
 
 
 class UserDetailView(APIView):
-    def get(self,request,*args,**kwargs):
-        user_id = self.request.query_params.get("id")
-        if user_id is None:
-            user = UserModel.objects.all()
-            serializer = UserSerializer(user, many=True)
-            return Response(serializer.data)
-        else:
-            user = UserModel.objects.get(id=user_id)
-            serializer = UserSerializer(user)
-            return Response(serializer.data)
-
     def post(self, request):
         serializer = UserSerializer(data=request.data)        
         if serializer.is_valid():
@@ -53,20 +42,43 @@ class QuestionView(APIView):
 
 class QuestionCheckView(APIView):
     def get(self, request):
-        lan = request.query_params.get("lan")
-        question_id  = request.query_params.get("question_id")
         request_answer = request.query_params.get("answer")
-        question = Question.objects.get(id=question_id)
-        if lan == 'ru':
-            if question.ans_ru == request_answer:
-                return Response(data={'response':f"True"})
+        if question_id:
+            question_id  = request.query_params.get("question_id")
+            question = Question.objects.get(id=question_id)
+            if question.ans == request_answer:
+                return Response(data={
+                    'response':f"True", 
+                    "category":f"{question.category}", 
+                    "question_id":f"{question_id}", 
+                    'answer':f'{request_answer}'
+                    })
             else:
-                return Response(data={'response':f"False"})
-        if lan == 'uz':
-            if question.ans_uz == request_answer:
-                return Response(data={'response':f"True"})
+                return Response(data={
+                    'response':f"False", 
+                    "category":f"{question.category}", 
+                    "question_id":f"{question_id}", 
+                    'answer':f'{request_answer}'
+                    })
+
+        elif extra_question_id:
+            extra_question_id = request.query_params.get("extra_question_id")
+            question = ExtraQuestion.objects.get(id=question_id)
+            if question.ans == request_answer:
+                return Response(data={
+                    'response':f"True", 
+                    "extra_category":f"{question.extra_category}", 
+                    "extra_question_id":f"{question_id}", 
+                    "answer":f"{request_answer}"
+                    })
             else:
-                return Response(data={'response':f"False"})
+                return Response(data={
+                    'response':f"False", 
+                    "extra_category":f"{question.extra_category}", 
+                    "extra_question_id":f"{question_id}", 
+                    'answer':f'{request_answer}'
+                    })
+        
 
 
 class ExtraCategoryView(generics.ListAPIView):

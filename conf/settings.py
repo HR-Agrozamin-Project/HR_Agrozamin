@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-9r=j!4&oz!(4bsuhz=d1^^rj=4695((6xxoaz)^wj*l#w2+s8x
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['139.162.159.187']
+ALLOWED_HOSTS = ['139.162.159.187', '127.0.0.1']
 
 # AUTH_USER_MODEL = 'agrozamin_hr.UserModel'
 
@@ -95,16 +95,6 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'HR_Agrozamin',
-#         'USER': 'postgres',
-#         'PASSWORD': '123',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#     }
-# }
 
 DATABASES = {
    'default': {

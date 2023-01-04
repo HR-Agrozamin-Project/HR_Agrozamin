@@ -9,7 +9,7 @@ class CategoryTranslationOptions(TranslationOptions):
 
 @register(Question)
 class QuestionTranslationOptions(TranslationOptions):
-    fields = ('question','A','B','C','D','ans', 'category')
+    fields = ('question','A','B','C','D')
 
 @register(ExtraCategory)
 class ExtraCategoryTranslationOptions(TranslationOptions):
@@ -17,4 +17,4 @@ class ExtraCategoryTranslationOptions(TranslationOptions):
 
 @register(ExtraQuestion)
 class ExtraQuestionTranslationOptions(TranslationOptions):
-    fields = ('question','A','B','C','D','ans', 'extra_category')
+    fields = ('question','A','B','C','D')

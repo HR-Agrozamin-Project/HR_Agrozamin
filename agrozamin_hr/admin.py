@@ -4,7 +4,6 @@ from agrozamin_hr.models.categories import Category, ExtraCategory
 from agrozamin_hr.models.questions import Question, ExtraQuestion
 from agrozamin_hr.models.usermodel import UserModel
 from agrozamin_hr.models.user_admin import User_admin
-from agrozamin_hr.models.regions import Region, City
 from modeltranslation.admin import TranslationAdmin
 from django.contrib.auth.models import Group
 admin.site.register(User_admin)
@@ -14,16 +13,10 @@ admin.site.site_header = _("HR-Agrozamin")
 admin.site.site_title = _("Agrobank ma'muriyati portali")     #"Портал администрации Агробанк")
 admin.site.index_title = _("HR-Agrozamin portaliga xush kelibsiz") #"Добро пожаловать на Портал HR-Агрозамин"
 
-admin.site.register(City)
-@admin.register(Region)
-class RegionAdmin(admin.ModelAdmin):
-    list_display = ('city', 'region_name', "city_name")
-
 @admin.register(UserModel)
 class UserAdmin(admin.ModelAdmin):
     group_fieldsets = True 
-    list_display = ("first_name", "last_name", "phone_number", "gender", "education", "age","program_language", 'cv', 'test_result', 'city', 'region')
-    # raw_id_fields = ("extra_skill",)
+    list_display = ("first_name", "last_name", "phone_number", "gender", "education", "age","program_language", 'cv', 'test_result')
     
 @admin.register(Question)
 class QuesModelAdmin(TranslationAdmin):
