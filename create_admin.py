@@ -1,17 +1,17 @@
 import os,django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "conf.settings")
 django.setup()
-from django.contrib.auth.models import User
+from agrozamin_hr.models.user_admin import User_admin
 from django.conf import settings
 
 def handle(*args, **options):
-        if User.objects.count() == 0:
+        if User_admin.objects.count() == 0:
             for user in settings.ADMINS:
                 username = user[0].replace(' ', '')
                 email = user[1]
                 password = 'hr-parol'
                 print('Creating account for %s (%s)' % (username, email))
-                admin = User.objects.create_superuser(email=email, username=username, password=password)
+                admin = User_admin.objects.create_superuser(email=email, username=username, password=password)
                 admin.is_active = True
                 admin.is_admin = True
                 admin.save()
