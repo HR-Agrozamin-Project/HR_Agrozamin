@@ -43,7 +43,7 @@ class QuestionView(APIView):
 class QuestionCheckView(APIView):
     def get(self, request):
         request_answer = request.query_params.get("answer")
-        if question_id:
+        if request.query_params.get("question_id"):
             question_id  = request.query_params.get("question_id")
             question = Question.objects.get(id=question_id)
             if question.ans == request_answer:
@@ -61,7 +61,7 @@ class QuestionCheckView(APIView):
                     'answer':f'{request_answer}'
                     })
 
-        elif extra_question_id:
+        elif request.query_params.get("extra_question_id"):
             extra_question_id = request.query_params.get("extra_question_id")
             question = ExtraQuestion.objects.get(id=question_id)
             if question.ans == request_answer:
