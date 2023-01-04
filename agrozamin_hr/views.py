@@ -80,7 +80,6 @@ class QuestionCheckView(APIView):
                     })
         
 
-
 class ExtraCategoryView(generics.ListAPIView):
     queryset = ExtraCategory.objects.all()
     serializer_class = ExtraCategorySerializer
