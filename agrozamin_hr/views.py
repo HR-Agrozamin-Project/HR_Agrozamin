@@ -68,14 +68,14 @@ class QuestionCheckView(APIView):
                 return Response(data={
                     'response':f"True", 
                     "extra_category":f"{question.extra_category}", 
-                    "extra_question_id":f"{question_id}", 
+                    "extra_question_id":f"{extra_question_id}", 
                     "answer":f"{request_answer}"
                     })
             else:
                 return Response(data={
                     'response':f"False", 
                     "extra_category":f"{question.extra_category}", 
-                    "extra_question_id":f"{question_id}", 
+                    "extra_question_id":f"{extra_question_id}", 
                     'answer':f'{request_answer}'
                     })
         
