@@ -19,7 +19,7 @@ jobs:
         script: |
           cd ~
           cd HR_Agrozamin
-          git pull
+          git pull origin main
           
           docker-compose down
           docker-compose build
