@@ -63,7 +63,7 @@ class QuestionCheckView(APIView):
 
         elif request.query_params.get("extra_question_id"):
             extra_question_id = request.query_params.get("extra_question_id")
-            question = ExtraQuestion.objects.get(id=question_id)
+            question = ExtraQuestion.objects.get(id=extra_question_id)
             if question.ans == request_answer:
                 return Response(data={
                     'response':f"True", 
