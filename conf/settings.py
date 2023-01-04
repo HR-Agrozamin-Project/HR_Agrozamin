@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-9r=j!4&oz!(4bsuhz=d1^^rj=4695((6xxoaz)^wj*l#w2+s8x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['139.162.159.187']
 
 # AUTH_USER_MODEL = 'agrozamin_hr.UserModel'
 
