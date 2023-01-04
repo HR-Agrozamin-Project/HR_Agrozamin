@@ -10,6 +10,6 @@ urlpatterns = [
     path('question/', QuestionView.as_view()),
     path('extra-category/', ExtraCategoryView.as_view()),
     path('extra-question/', ExrtaQuestionView.as_view()),
-    path('user/', UserDetailView.as_view()),
+    path('register/', UserDetailView.as_view()),
     path('check/', QuestionCheckView.as_view())
 ]
