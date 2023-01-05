@@ -14,16 +14,17 @@ import os
 
 class UserDetailView(APIView):
     def post(self, request):
-        serializer = UserSerializer(data=request.data)        
+        serializer = UserSerializer(data=request.data)       
         if serializer.is_valid():
-            first_name  = f"{serializer.validated_data['first_name']}"
-            last_name  = f"{serializer.validated_data['last_name']}"
-
+            
+            full_name  = f"{serializer.validated_data['full_name']}"
+            first_name = full_name.split(' ')[0]
+            last_name = full_name.split(' ')[1]
             file_format_cv  = f"{serializer.validated_data['cv']}".split('.')[-1]
-            file_format_test_result = f"{serializer.validated_data['test_result']}".split('.')[-1]
 
             serializer.validated_data['cv'].name = f"{first_name}_{last_name}_cv.{file_format_cv}"
-            serializer.validated_data['test_result'].name=f'{first_name}_{last_name}_test_result.{file_format_test_result}'
+
+            
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

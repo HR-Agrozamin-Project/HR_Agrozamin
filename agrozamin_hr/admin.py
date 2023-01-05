@@ -16,7 +16,7 @@ admin.site.index_title = _("HR-Agrozamin portaliga xush kelibsiz") #"Добро 
 @admin.register(UserModel)
 class UserAdmin(admin.ModelAdmin):
     group_fieldsets = True 
-    list_display = ("first_name", "last_name", "phone_number", "gender", "education", "age","program_language", 'cv', 'test_result')
+    list_display = ("full_name", "phone_number", "gender", "education", "age","program_language", 'cv')
     
 @admin.register(Question)
 class QuesModelAdmin(TranslationAdmin):

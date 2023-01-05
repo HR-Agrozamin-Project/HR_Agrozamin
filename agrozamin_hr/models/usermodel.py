@@ -35,8 +35,7 @@ class Choice:
 
 class UserModel(models.Model):
     chat_id = models.PositiveIntegerField(unique=True)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+    full_name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=9, unique=True, validators=[validate_length])
     gender = gender = models.CharField(max_length=10, choices=Choice.Genders.choices)
     education = models.CharField(max_length=30, choices=Choice.Education.choices)
@@ -44,10 +43,9 @@ class UserModel(models.Model):
     program_language = models.ForeignKey(Category, on_delete=models.CASCADE)
     extra_skill=models.ManyToManyField(ExtraCategory, blank=True)
     cv = models.FileField(upload_to='cv_files')
-    # test_result = models.FileField(upload_to='test_result_files')
 
     def __str__(self):
-        return self.first_name
+        return self.full_name
     
 
     class Meta:

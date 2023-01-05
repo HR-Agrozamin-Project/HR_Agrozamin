@@ -7,7 +7,7 @@ from .models.usermodel import UserModel
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
     model = UserModel
-    fields = ("id","chat_id","first_name", "last_name", "phone_number", "gender", "education", "age","program_language", "extra_skill", "cv", "test_result")
+    fields = ("id","chat_id","full_name", "phone_number", "gender", "education", "age","program_language", "extra_skill", "cv")
 
 
 class CategorySerializer(serializers.ModelSerializer):
