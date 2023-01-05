@@ -45,39 +45,47 @@ class QuestionCheckView(APIView):
         request_answer = request.query_params.get("answer")
         if request.query_params.get("question_id"):
             question_id  = request.query_params.get("question_id")
-            question = Question.objects.get(id=question_id)
-            if question.ans == request_answer:
-                return Response(data={
-                    'response':f"True", 
-                    "category":f"{question.category}", 
-                    "question_id":f"{question_id}", 
-                    'answer':f'{request_answer}'
-                    })
-            else:
-                return Response(data={
-                    'response':f"False", 
-                    "category":f"{question.category}", 
-                    "question_id":f"{question_id}", 
-                    'answer':f'{request_answer}'
-                    })
-
+            try:
+                question = Question.objects.get(id=question_id)
+                if question.ans == request_answer:
+                    return Response(data={
+                        'response':f"True", 
+                        "category":f"{question.category}", 
+                        "question_id":f"{question_id}", 
+                        'answer':f'{request_answer}'
+                        })
+                else:
+                    return Response(data={
+                        'response':f"False", 
+                        "category":f"{question.category}", 
+                        "question_id":f"{question_id}", 
+                        'answer':f'{request_answer}'
+                        })
+            except Question.DoesNotExist:
+                content = {'question': 'question does not exist'}
+                return Response(content, status=status.HTTP_404_NOT_FOUND)
+            
         elif request.query_params.get("extra_question_id"):
             extra_question_id = request.query_params.get("extra_question_id")
-            question = ExtraQuestion.objects.get(id=extra_question_id)
-            if question.ans == request_answer:
-                return Response(data={
-                    'response':f"True", 
-                    "extra_category":f"{question.extra_category}", 
-                    "extra_question_id":f"{extra_question_id}", 
-                    "answer":f"{request_answer}"
-                    })
-            else:
-                return Response(data={
-                    'response':f"False", 
-                    "extra_category":f"{question.extra_category}", 
-                    "extra_question_id":f"{extra_question_id}", 
-                    'answer':f'{request_answer}'
-                    })
+            try:
+                question = ExtraQuestion.objects.get(id=extra_question_id)
+                if question.ans == request_answer:
+                    return Response(data={
+                        'response':f"True", 
+                        "extra_category":f"{question.extra_category}", 
+                        "extra_question_id":f"{extra_question_id}", 
+                        "answer":f"{request_answer}"
+                        })
+                else:
+                    return Response(data={
+                        'response':f"False", 
+                        "extra_category":f"{question.extra_category}", 
+                        "extra_question_id":f"{extra_question_id}", 
+                        'answer':f'{request_answer}'
+                        })
+            except ExtraQuestion.DoesNotExist:
+                content = {'extra_question': 'extra_question does not exist'}
+                return Response(content, status=status.HTTP_404_NOT_FOUND)
         
 
 class ExtraCategoryView(generics.ListAPIView):
