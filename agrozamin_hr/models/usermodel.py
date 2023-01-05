@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from agrozamin_hr.models.categories import Category, ExtraCategory
+from agrozamin_hr.models.questions import Question, ExtraQuestion
 from django.utils.translation import gettext_lazy as _
 import os
 
@@ -49,7 +50,13 @@ class UserModel(models.Model):
     
 
     class Meta:
-        verbose_name = _(u'Foydalanuvchi')
-        verbose_name_plural = _(u'Foydalanuvchilar')
+        verbose_name = _('Foydalanuvchi')
+        verbose_name_plural = _('Foydalanuvchilar')
+
+
+class UserResult(models.Model):
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+    correct = models.BooleanField()
 
 

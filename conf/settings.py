@@ -51,8 +51,7 @@ INSTALLED_APPS = [
     #django-rest
     'drf_yasg',
     'rest_framework',
-    # 'rest_framework_simplejwt',
-    # 'rest_framework_simplejwt.token_blacklist',
+    'nested_admin',
 ]
 
 

@@ -1,8 +1,9 @@
 from django.contrib import admin
+import nested_admin
 from django.utils.translation import gettext_lazy as _
 from agrozamin_hr.models.categories import Category, ExtraCategory
 from agrozamin_hr.models.questions import Question, ExtraQuestion
-from agrozamin_hr.models.usermodel import UserModel
+from agrozamin_hr.models.usermodel import UserModel, UserResult
 from agrozamin_hr.models.user_admin import User_admin
 from modeltranslation.admin import TranslationAdmin
 from django.contrib.auth.models import Group
@@ -13,8 +14,14 @@ admin.site.site_header = _("HR-Agrozamin")
 admin.site.site_title = _("Agrobank ma'muriyati portali")     #"Портал администрации Агробанк")
 admin.site.index_title = _("HR-Agrozamin portaliga xush kelibsiz") #"Добро пожаловать на Портал HR-Агрозамин"
 
+admin.site.register(UserResult)
+
+class UserResultInline(nested_admin.NestedStackedInline):
+    model = UserResult
+
 @admin.register(UserModel)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(nested_admin.NestedModelAdmin):
+    inlines = [UserResultInline]
     group_fieldsets = True 
     list_display = ("full_name", "phone_number", "gender", "education", "age","program_language", 'cv')
     
