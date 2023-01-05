@@ -17,9 +17,6 @@ sleep 10
 echo "Apply database migrations"
 python3 manage.py migrate
 
-echo "collectstatic"
-python3 manage.py collectstatic
-
 echo "initadmin"
 python3 create_admin.py
 
