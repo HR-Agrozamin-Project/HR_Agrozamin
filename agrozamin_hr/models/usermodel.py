@@ -44,7 +44,7 @@ class UserModel(models.Model):
     program_language = models.ForeignKey(Category, on_delete=models.CASCADE)
     extra_skill=models.ManyToManyField(ExtraCategory, blank=True)
     cv = models.FileField(upload_to='cv_files')
-    test_result = models.FileField(upload_to='test_result_files')
+    # test_result = models.FileField(upload_to='test_result_files')
 
     def __str__(self):
         return self.first_name
