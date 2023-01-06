@@ -1,38 +1,59 @@
 from django.contrib import admin
 import nested_admin
+from agrozamin_hr.models.usermodel import UserModel
 from django.utils.translation import gettext_lazy as _
 from agrozamin_hr.models.categories import Category, ExtraCategory
 from agrozamin_hr.models.questions import Question, ExtraQuestion
-from agrozamin_hr.models.usermodel import UserModel, UserResult
+from agrozamin_hr.models.usermodel import UserModel, QuetionResult, ExtraQuetionResult
 from agrozamin_hr.models.user_admin import User_admin
 from modeltranslation.admin import TranslationAdmin
 from django.contrib.auth.models import Group
-admin.site.register(User_admin)
+from django.contrib.auth.admin import UserAdmin
 admin.site.unregister(Group)
 
 admin.site.site_header = _("HR-Agrozamin")
 admin.site.site_title = _("Agrobank ma'muriyati portali")     #"Портал администрации Агробанк")
 admin.site.index_title = _("HR-Agrozamin portaliga xush kelibsiz") #"Добро пожаловать на Портал HR-Агрозамин"
 
-admin.site.register(UserResult)
 
-class UserResultInline(nested_admin.NestedStackedInline):
-    model = UserResult
+@admin.register(User_admin)
+class Admins(UserAdmin):
+    fieldsets = UserAdmin.fieldsets 
+
+class QuetionResultInline(admin.TabularInline):
+    model = QuetionResult
+    extra = 0
+    group_fieldsets = True
+
+class ExtraQuetionResultInline(admin.TabularInline):
+    model = ExtraQuetionResult
+    extra = 0
+    group_fieldsets = True
 
 @admin.register(UserModel)
-class UserAdmin(nested_admin.NestedModelAdmin):
-    inlines = [UserResultInline]
+class UserAdmin(admin.ModelAdmin):
+    inlines = [QuetionResultInline, ExtraQuetionResultInline]
     group_fieldsets = True 
     list_display = ("full_name", "phone_number", "gender", "education", "age","program_language", 'cv')
+    raw_id_fields = ['program_language', 'extra_skill']
+    fieldsets = (
+        (_("Shaysiy ma'lumotlar"), {
+            'fields': ("full_name", "phone_number", "gender", "education", "age","program_language", 'extra_skill', 'cv')}),
+        )
+
+    # actions = ['Habar_yuborish']
+
+    # def Habar_yuborish(self, request, queryset):
+    #     queryset.update()
+    #     print(queryset)
+
     
 @admin.register(Question)
 class QuesModelAdmin(TranslationAdmin):
-    # group_fieldsets = True 
     list_display = ('question','A','B','C','D','ans', 'category')
 
 @admin.register(Category)
-class CategiryModelAdmin(TranslationAdmin):
-    # group_fieldsets = True 
+class CategiryModelAdmin(admin.ModelAdmin):
     list_display = ('category_name',)
     # class Media:
     #     js = (
@@ -46,29 +67,10 @@ class CategiryModelAdmin(TranslationAdmin):
 
 @admin.register(ExtraQuestion)
 class ExtraQuestionAdmin(TranslationAdmin):
-    # group_fieldsets = True 
     list_display = ('question','A','B','C','D','ans', 'extra_category')
 
 @admin.register(ExtraCategory)
-class ExtraCategoryAdmin(TranslationAdmin):
-    # group_fieldsets = True 
+class ExtraCategoryAdmin(admin.ModelAdmin):
     list_display = ('extra_category_name',)
 
 
-
-# @admin.register(Question)
-# class QuestAdmin(admin.ModelAdmin):
-#     model = Question
-#     fields = ['title', 'document','is_activate']
-#     list_display = ['title', 'document','is_activate']
-
-#     actions = ['Habar_yuborish']
-
-#     def Habar_yuborish(self, request, queryset):
-        
-#         queryset.update(is_activate=False)
-#         print(queryset)
-
-
-# class ImportAdmin(admin.ModelAdmin):
-#     change_list_template = 'admin/change_list.html'

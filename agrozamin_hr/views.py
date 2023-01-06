@@ -11,6 +11,7 @@ from agrozamin_hr.serializers import (
     ExtraQuetionSerializer, ExtraCategorySerializer,
     UserSerializer)
 import os
+import random
 
 
 class UserDetailView(APIView):
@@ -26,6 +27,12 @@ class UserDetailView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    def delete(self, request):
+        users = UserModel.objects.all()
+        users.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT, data={"data":"all users deleted"})
+
+    
 
 class CategoryView(generics.ListAPIView):
     queryset = Category.objects.all()
@@ -34,7 +41,7 @@ class CategoryView(generics.ListAPIView):
 class QuestionView(APIView):
     def get(self, request):
         parameter  = request.query_params.get("category_id")
-        questions = Question.objects.filter(category_id=parameter)
+        questions = Question.objects.filter(category_id=parameter).order_by('?')[:20]
         serializer = QuestionSerializer(questions, many=True)
         return Response(serializer.data)
 
@@ -44,9 +51,11 @@ class ExtraCategoryView(generics.ListAPIView):
     
 class ExrtaQuestionView(APIView):
     def get(self, request):
-        parameter  = request.query_params.get("extra_category_id")
-        questions = ExtraQuestion.objects.filter(extra_category_name=parameter)
-        serializer = ExtraQuetionSerializer(questions, many=True)
+        parameters  = request.data["extra_category_id"]
+        all_questions = ExtraQuestion.objects.none()
+        for parameter in parameters:
+            all_questions |= ExtraQuestion.objects.filter(extra_category_id=parameter).order_by('?')[:5]
+        serializer = ExtraQuetionSerializer(all_questions, many=True)
         return Response(serializer.data)
 
 

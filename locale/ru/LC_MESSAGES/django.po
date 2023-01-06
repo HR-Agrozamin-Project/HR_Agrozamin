@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-05 17:19+0500\n"
+"POT-Creation-Date: 2023-01-06 15:54+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,18 +20,22 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\agrozamin_hr\admin.py:12
+#: .\agrozamin_hr\admin.py:14
 #, fuzzy
 msgid "HR-Agrozamin"
 msgstr "HR-Агрозамин"
 
-#: .\agrozamin_hr\admin.py:13
+#: .\agrozamin_hr\admin.py:15
 msgid "Agrobank ma'muriyati portali"
 msgstr "Портал администрации Агробанк"
 
-#: .\agrozamin_hr\admin.py:14
+#: .\agrozamin_hr\admin.py:16
 msgid "HR-Agrozamin portaliga xush kelibsiz"
 msgstr "Добро пожаловать на Портал HR-Агрозамин"
+
+#: .\agrozamin_hr\admin.py:40
+msgid "Shaysiy ma'lumotlar"
+msgstr "Персональные данные"
 
 #: .\agrozamin_hr\models\categories.py:11
 msgid "Kategoriya"
@@ -73,57 +77,55 @@ msgstr "Администратор"
 msgid "Administratorlar"
 msgstr "Администраторы"
 
-#: .\agrozamin_hr\models\usermodel.py:16
+#: .\agrozamin_hr\models\usermodel.py:17
 msgid "Erkak"
 msgstr "Мужчина"
 
-#: .\agrozamin_hr\models\usermodel.py:17
+#: .\agrozamin_hr\models\usermodel.py:18
 msgid "Ayol"
 msgstr "Женщина"
 
-#: .\agrozamin_hr\models\usermodel.py:20
+#: .\agrozamin_hr\models\usermodel.py:21
 msgid "O'rta"
 msgstr ""
 
-#: .\agrozamin_hr\models\usermodel.py:21
+#: .\agrozamin_hr\models\usermodel.py:22
 msgid "o'rta maxsus"
 msgstr ""
 
-#: .\agrozamin_hr\models\usermodel.py:22
+#: .\agrozamin_hr\models\usermodel.py:23
 msgid "Oliy tugallanmagan"
 msgstr ""
 
-#: .\agrozamin_hr\models\usermodel.py:23
+#: .\agrozamin_hr\models\usermodel.py:24
 msgid "Oliy"
 msgstr ""
 
-#: .\agrozamin_hr\models\usermodel.py:24
+#: .\agrozamin_hr\models\usermodel.py:25
 msgid "Magistr"
 msgstr ""
 
-#: .\agrozamin_hr\models\usermodel.py:25
+#: .\agrozamin_hr\models\usermodel.py:26
 msgid "PhD"
 msgstr "PhD"
 
-#: .\agrozamin_hr\models\usermodel.py:52
+#: .\agrozamin_hr\models\usermodel.py:53
 msgid "Foydalanuvchi"
 msgstr "Пользователь"
 
-#: .\agrozamin_hr\models\usermodel.py:53
+#: .\agrozamin_hr\models\usermodel.py:54
 msgid "Foydalanuvchilar"
 msgstr "Пользователи"
-
-#: .\agrozamin_hr\views.py:69
-msgid "savollar soni"
-msgstr "количество вопросов"
-
-#: .\agrozamin_hr\views.py:70
-msgid "to'g'ri javoblar soni"
-msgstr "количество правильных ответов"
 
 #: .\templates\admin\base_site.html:3
 msgid "Django site admin"
 msgstr ""
+
+#~ msgid "savollar soni"
+#~ msgstr "количество вопросов"
+
+#~ msgid "to'g'ri javoblar soni"
+#~ msgstr "количество правильных ответов"
 
 #~ msgid "Shahar"
 #~ msgstr "Город"

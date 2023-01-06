@@ -54,9 +54,13 @@ class UserModel(models.Model):
         verbose_name_plural = _('Foydalanuvchilar')
 
 
-class UserResult(models.Model):
+class QuetionResult(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
     correct = models.BooleanField()
 
+class ExtraQuetionResult(models.Model):
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    extra_question_id = models.ForeignKey(ExtraQuestion, on_delete=models.CASCADE)
+    correct = models.BooleanField()
 
