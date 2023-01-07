@@ -5,7 +5,7 @@ from rest_framework import status, generics
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from agrozamin_hr.models.categories import Category, ExtraCategory
 from agrozamin_hr.models.questions import Question, ExtraQuestion
-from agrozamin_hr.models.usermodel import UserModel
+from agrozamin_hr.models.usermodel import UserModel, QuetionResult, ExtraQuetionResult
 from agrozamin_hr.serializers import (
     QuestionSerializer, CategorySerializer, 
     ExtraQuetionSerializer, ExtraCategorySerializer,
@@ -57,46 +57,97 @@ class ExrtaQuestionView(APIView):
             all_questions |= ExtraQuestion.objects.filter(extra_category_id=parameter).order_by('?')[:5]
         serializer = ExtraQuetionSerializer(all_questions, many=True)
         return Response(serializer.data)
-
+        
 
 class QuestionCheckView(APIView):
+
+    def delete(self, request):
+        chat_id = request.data['chat_id']
+        user_id = UserModel.objects.get(chat_id=chat_id)
+
+        question_results = QuetionResult.objects.filter(user=user_id)
+        question_results.delete()
+        extra_question_results = ExtraQuetionResult.objects.filter(user=user_id)
+        extra_question_results.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT, data={"data":"all users deleted"})
+
     def get(self, request):
-        questions = request.data['questions']
-        questions_len = len(questions)
-        key_result = {}
-        true_results = 0
-        for key, value in questions.items():
-            question = Question.objects.get(id=int(key))
-            if question.ans == value:
-                result = "True"
-                key_result[key] = result
-                true_results += 1
-            else:
-                result = "False"
-                key_result[key] = result
-        
-        extra_questions = request.data['extra_questions']
-        extra_questions_len = len(questions)
-        extra_key_result = {}
-        extra_true_results = 0
-        for extra_key, extra_value in extra_questions.items():
-            extra_question = ExtraQuestion.objects.get(id=int(extra_key))
-            if extra_question.ans == extra_value:
-                result = "True"
-                extra_key_result[extra_key] = result
-                extra_true_results += 1
-            else:
-                result = "False"
-                key_result[key] = result
-    
-        return Response(data={"questions":{
-                                    "results":f"{key_result}", 
+
+        def request_question(user_id,all_json_data):
+            request.data['questions']
+            questions = request.data['questions']
+            questions_len = len(questions)
+            key_result = {}
+            true_results = 0
+            for key, value in questions.items():
+                question = Question.objects.get(id=int(key))
+                if question.ans == value:
+                    result = "True"
+                    key_result[key] = result
+                    true_results += 1
+                else:
+                    result = "False"
+                    key_result[key] = result
+            
+                QuetionResult.objects.create(
+                    user=user_id, 
+                    category_id=question.category, 
+                    question_id=question, 
+                    user_answer=value,
+                    result=result
+                )
+            
+            all_json_data["questions"]={"results":f"{key_result}", 
                                     "count_questions":questions_len, 
-                                    "count_true":true_results},
-                                "extra_questions":{
-                                    "results":f"{extra_key_result}", 
-                                    "count_questions":extra_questions_len, 
-                                    "count_true":extra_true_results
-                                }})
+                                    "count_true":true_results
+                              }              
+
+        def request_extra_questions(user_id,all_json_data):
+            request.data['extra_questions']
+            extra_questions = request.data['extra_questions']
+            extra_questions_len = len(extra_questions)
+            extra_key_result = {}
+            extra_true_results = 0
+            for extra_key, extra_value in extra_questions.items():
+                extra_question = ExtraQuestion.objects.get(id=int(extra_key))
+                if extra_question.ans == extra_value:
+                    result = "True"
+                    extra_key_result[extra_key] = result
+                    extra_true_results += 1
+                else:
+                    result = "False"
+                    extra_key_result[extra_key] = result
+            
+                ExtraQuetionResult.objects.create(
+                        user=user_id, 
+                        extra_category_id=extra_question.extra_category, 
+                        extra_question_id=extra_question, 
+                        user_answer=extra_value,
+                        result=result
+                    )
+                
+            all_json_data["extra_questions"]={"results":f"{extra_key_result}", 
+                                        "count_questions":extra_questions_len, 
+                                        "count_true":extra_true_results
+                                    }
+
+
+        chat_id = request.data['chat_id']
+        user_id = UserModel.objects.get(chat_id=chat_id)
+
+        all_json_data= {}
+        
+        keys = list(request.data.keys())
+
+        if ("extra_questions" in keys) and ("questions" in keys):
+                request_extra_questions(user_id,all_json_data)
+                request_question(user_id,all_json_data)
+
+        elif "extra_questions" in keys:
+                request_extra_questions(user_id,all_json_data)
+        elif ("questions" in keys):
+                request_question(user_id,all_json_data)
+
+        return Response(data=all_json_data)
 
 

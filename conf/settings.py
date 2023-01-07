@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-from datetime import timedelta
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,7 +51,10 @@ INSTALLED_APPS = [
     #django-rest
     'drf_yasg',
     'rest_framework',
+
+    #admin customization
     'nested_admin',
+    'admin_reorder'
 ]
 
 
@@ -67,7 +70,31 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'admin_reorder.middleware.ModelAdminReorder', #'admin reorder
 ]
+
+
+ADMIN_REORDER = (
+    # First group: Category and Question models
+    {'app': 'agrozamin_hr', 'label': _('Kategoriya va savollar'),
+     'models': ('agrozamin_hr.Category', 'agrozamin_hr.Question',)
+    },
+
+    # Second group: ExtraCategory and ExtraQuestion models
+    {'app': 'agrozamin_hr', 'label': _("Qo'shimcha kategoriya va qo'shimcha savollar"),
+     'models': ('agrozamin_hr.ExtraCategory', 'agrozamin_hr.ExtraQuestion',)
+    },
+    
+    # third group: UserModel, QuetionResult, ExtraQuetionResult
+    {'app': 'agrozamin_hr', 'label': _("Kandedatlar malumotlari"),
+     'models': ('agrozamin_hr.UserModel',)
+    },
+    
+    # fourth group: UserModel, QuetionResult, ExtraQuetionResult
+    {'app': 'agrozamin_hr', 'label': _("Adminstratorlar malumotlari"),
+     'models': ('agrozamin_hr.User_admin',)
+    },)
+
 
 ROOT_URLCONF = 'conf.urls'
 
@@ -93,27 +120,27 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#    'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'HR_Agrozamin_1', 
-#         'USER': 'postgres', 
-#         'PASSWORD': 123,
-#         'HOST': '127.0.0.1',    
-#         'PORT': 5432
-#    }
-# }
-
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('POSTGRES_DB'), 
-        'USER': os.environ.get('POSTGRES_USER'), 
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('POSTGRES_HOST'),    
-        'PORT': os.environ.get('POSTGRES_PORT')
+        'NAME': 'HR_Agrozamin_1', 
+        'USER': 'postgres', 
+        'PASSWORD': 123,
+        'HOST': '127.0.0.1',    
+        'PORT': 5432
    }
 }
+
+# DATABASES = {
+#    'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('POSTGRES_DB'), 
+#         'USER': os.environ.get('POSTGRES_USER'), 
+#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+#         'HOST': os.environ.get('POSTGRES_HOST'),    
+#         'PORT': os.environ.get('POSTGRES_PORT')
+#    }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

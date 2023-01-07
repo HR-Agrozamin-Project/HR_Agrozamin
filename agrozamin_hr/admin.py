@@ -34,13 +34,12 @@ class ExtraQuetionResultInline(admin.TabularInline):
 class UserAdmin(admin.ModelAdmin):
     inlines = [QuetionResultInline, ExtraQuetionResultInline]
     group_fieldsets = True 
-    list_display = ("full_name", "phone_number", "gender", "education", "age","program_language", 'cv')
+    list_display = ("id","chat_id","full_name", "phone_number", "gender", "education", "age","program_language", 'cv')
     raw_id_fields = ['program_language', 'extra_skill']
     fieldsets = (
         (_("Shaysiy ma'lumotlar"), {
-            'fields': ("full_name", "phone_number", "gender", "education", "age","program_language", 'extra_skill', 'cv')}),
+            'fields': ("chat_id","full_name", "phone_number", "gender", "education", "age","program_language", 'extra_skill', 'cv')}),
         )
-
     # actions = ['Habar_yuborish']
 
     # def Habar_yuborish(self, request, queryset):
@@ -50,11 +49,12 @@ class UserAdmin(admin.ModelAdmin):
     
 @admin.register(Question)
 class QuesModelAdmin(TranslationAdmin):
-    list_display = ('question','A','B','C','D','ans', 'category')
+    list_display = ("id",'question','A','B','C','D','ans', 'category')
+
 
 @admin.register(Category)
 class CategiryModelAdmin(admin.ModelAdmin):
-    list_display = ('category_name',)
+    list_display = ("id",'category_name',)
     # class Media:
     #     js = (
     #         'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
@@ -67,10 +67,10 @@ class CategiryModelAdmin(admin.ModelAdmin):
 
 @admin.register(ExtraQuestion)
 class ExtraQuestionAdmin(TranslationAdmin):
-    list_display = ('question','A','B','C','D','ans', 'extra_category')
+    list_display = ("id",'question','A','B','C','D','ans', 'extra_category')
 
 @admin.register(ExtraCategory)
 class ExtraCategoryAdmin(admin.ModelAdmin):
-    list_display = ('extra_category_name',)
+    list_display = ("id",'extra_category_name',)
 
 

@@ -35,7 +35,7 @@ class Choice:
 
 
 class UserModel(models.Model):
-    chat_id = models.PositiveIntegerField(unique=True)
+    chat_id = models.PositiveBigIntegerField(unique=True)
     full_name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=9, unique=True, validators=[validate_length])
     gender = gender = models.CharField(max_length=10, choices=Choice.Genders.choices)
@@ -56,11 +56,15 @@ class UserModel(models.Model):
 
 class QuetionResult(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
-    correct = models.BooleanField()
+    user_answer = models.CharField(max_length=20)
+    result = models.CharField(max_length=20)
 
 class ExtraQuetionResult(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    extra_category_id = models.ForeignKey(ExtraCategory, on_delete=models.CASCADE)
     extra_question_id = models.ForeignKey(ExtraQuestion, on_delete=models.CASCADE)
-    correct = models.BooleanField()
+    user_answer = models.CharField(max_length=20)
+    result = models.CharField(max_length=20)
 
