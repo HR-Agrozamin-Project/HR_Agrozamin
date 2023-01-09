@@ -40,7 +40,7 @@ class UserAdmin(admin.ModelAdmin):
         (_("Shaysiy ma'lumotlar"), {
             'fields': ("chat_id","full_name", "phone_number", "gender", "education", "age","program_language", 'extra_skill', 'cv')}),
         )
-    list_per_page = 30
+    list_per_page = 10
 
     # actions = ['Habar_yuborish']
 
@@ -53,33 +53,33 @@ class UserAdmin(admin.ModelAdmin):
 class QuesModelAdmin(TranslationAdmin):
     list_display = ("id",'question','A','B','C','D','ans', 'category')
     search_fields = ("question",)
-    list_per_page = 30
+    list_per_page = 10
 
 @admin.register(Category)
 class CategiryModelAdmin(admin.ModelAdmin):
     list_display = ("id",'category_name',)
     search_fields = ('extra_category_name',)
-    list_per_page = 30
-    # class Media:
-    #     js = (
-    #         'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-    #         'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
-    #         'modeltranslation/js/tabbed_translation_fields.js',
-    #     )
-    #     css = {
-    #         'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
-    #     }
+    list_per_page = 10
+    class Media:
+        js = (
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
 
 @admin.register(ExtraQuestion)
 class ExtraQuestionAdmin(TranslationAdmin):
     list_display = ("id",'question','A','B','C','D','ans', 'extra_category')
     search_fields = ('question',)
-    list_per_page = 30
+    list_per_page = 10
 
 @admin.register(ExtraCategory)
 class ExtraCategoryAdmin(admin.ModelAdmin):
     list_display = ("id",'extra_category_name',)
     search_fields = ('extra_category_name',)
-    list_per_page = 30
+    list_per_page = 10
 
 
