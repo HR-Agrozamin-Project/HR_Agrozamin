@@ -28,7 +28,8 @@ SECRET_KEY = 'django-insecure-9r=j!4&oz!(4bsuhz=d1^^rj=4695((6xxoaz)^wj*l#w2+s8x
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['139.162.159.187', '127.0.0.1']
+# ALLOWED_HOSTS = ['139.162.159.187', '127.0.0.1', 'jobir.uz']
+ALLOWED_HOSTS = ["*"]
 
 # AUTH_USER_MODEL = 'agrozamin_hr.UserModel'
 
