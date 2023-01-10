@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+load_dotenv()
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -121,16 +123,7 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#    'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'HR_Agrozamin_1', 
-#         'USER': 'postgres', 
-#         'PASSWORD': 123,
-#         'HOST': '127.0.0.1',    
-#         'PORT': 5432
-#    }
-# }
+
 
 DATABASES = {
    'default': {
@@ -184,7 +177,6 @@ MODELTRANSLATION_LANGUAGES = ('ru', 'uz')
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
-
 
 
 

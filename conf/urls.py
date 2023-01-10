@@ -29,6 +29,7 @@ from drf_yasg import openapi
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path('_nested_admin/', include('nested_admin.urls')),
+    # path("admin/", admin.site.urls),
 ]
 urlpatterns += i18n_patterns(path("admin/", admin.site.urls))
 
