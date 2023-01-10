@@ -44,14 +44,24 @@ class UserModel(models.Model):
     program_language = models.ForeignKey(Category, on_delete=models.CASCADE)
     extra_skill=models.ManyToManyField(ExtraCategory, blank=True)
     cv = models.FileField(upload_to='cv_files')
+    sms = models.BooleanField(default='False')
 
     def __str__(self):
         return self.full_name
     
-
     class Meta:
         verbose_name = _('Foydalanuvchi')
         verbose_name_plural = _('Foydalanuvchilar')
+
+
+class SmsHistory(models.Model):
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    text = models.TextField()
+    data = models.DateTimeField()
+
+    class Meta:
+        verbose_name = _('SMS')
+        verbose_name_plural = _('SMSlar')
 
 
 class QuetionResult(models.Model):

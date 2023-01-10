@@ -4,12 +4,12 @@ from agrozamin_hr.models.usermodel import UserModel
 from django.utils.translation import gettext_lazy as _
 from agrozamin_hr.models.categories import Category, ExtraCategory
 from agrozamin_hr.models.questions import Question, ExtraQuestion
-from agrozamin_hr.models.usermodel import UserModel, QuetionResult, ExtraQuetionResult
+from agrozamin_hr.models.usermodel import UserModel, SmsHistory, QuetionResult, ExtraQuetionResult
 from agrozamin_hr.models.user_admin import User_admin
 from modeltranslation.admin import TranslationAdmin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
-
+from datetime import datetime   
 from django.shortcuts import render
 from django import forms
 import requests
@@ -29,6 +29,11 @@ admin.site.index_title = _("HR-Agrozamin portaliga xush kelibsiz") #"Добро 
 class Admins(UserAdmin):
     fieldsets = UserAdmin.fieldsets 
 
+class SmsHistoryAdmin(admin.TabularInline):
+    model = SmsHistory
+    extra = 0
+    group_fieldsets = True
+
 class QuetionResultInline(admin.TabularInline):
     model = QuetionResult
     extra = 0
@@ -44,16 +49,22 @@ class TextImportForm(forms.Form):
 
 @admin.register(UserModel)
 class UserAdmin(admin.ModelAdmin):
-    inlines = [QuetionResultInline, ExtraQuetionResultInline]
+    inlines = [SmsHistoryAdmin, QuetionResultInline, ExtraQuetionResultInline]
     group_fieldsets = True 
-    list_display = ("id","chat_id","full_name", "phone_number", "gender", "education", "age","program_language", 'cv')
+    list_filter = ['program_language', 'extra_skill', 'sms']
+    list_display_links = ("id", 'full_name')
+    list_display = ("id", 'full_name', "chat_id", "phone_number", "gender", "education", "age","program_language", 'cv', 'sms')
     raw_id_fields = ['program_language', 'extra_skill']
     list_per_page = 10
     actions = ['update_status']
     fieldsets = (
         (_("Shaysiy ma'lumotlar"), {
-            'fields': ("chat_id","full_name", "phone_number", "gender", "education", "age","program_language", 'extra_skill', 'cv')}),)
+            'fields': ("chat_id","full_name", "phone_number", "gender", "education", "age","program_language", 'extra_skill', 'cv', 'sms')}),)
     
+    def user(self, obj):
+        return obj.full_name,
+    user.allow_tags = True
+
 
     def send_message(self, text, chat_id):
         url = f"https://api.telegram.org/bot{os.environ.get('BOT_TOKEN')}/sendMessage?chat_id={chat_id}&text={text}&parse_mode=HTML"
@@ -87,6 +98,8 @@ class UserAdmin(admin.ModelAdmin):
                     self.send_message(chat_id=query.chat_id, text=text)
                     self.send_venue(chat_id=query.chat_id)
                     self.send_contact(chat_id=query.chat_id)
+                    queryset.update(sms='True')
+                    SmsHistory.objects.create(user=query, text=text, data=datetime.now())
                     
             self.message_user(request,
                               "Send message to {} users".format(queryset.count()))
@@ -101,11 +114,11 @@ class UserAdmin(admin.ModelAdmin):
     update_status.short_description = _("Habar yuborish")
 
 
-    
 @admin.register(Question)
 class QuesModelAdmin(TranslationAdmin):
     list_display = ("id",'question','A','B','C','D','ans', 'category')
     search_fields = ("question",)
+    list_filter = ('category', )
     list_per_page = 10
 
 @admin.register(Category)
@@ -118,6 +131,7 @@ class CategiryModelAdmin(admin.ModelAdmin):
 class ExtraQuestionAdmin(TranslationAdmin):
     list_display = ("id",'question','A','B','C','D','ans', 'extra_category')
     search_fields = ('question',)
+    list_filter = ['extra_category']
     list_per_page = 10
 
 @admin.register(ExtraCategory)
