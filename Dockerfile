@@ -11,6 +11,7 @@ RUN pip uninstall django
 RUN pip install -r requirements.txt
 
 RUN chmod +x entrypoint.sh
+RUN django-admin compilemessages
 
 EXPOSE 8000
 
