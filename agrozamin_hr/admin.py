@@ -25,6 +25,7 @@ admin.site.site_title = _("Agrobank ma'muriyati portali")     #"Портал а�
 admin.site.index_title = _("HR-Agrozamin portaliga xush kelibsiz") #"Добро пожаловать на Портал HR-Агрозамин"
 
 
+
 @admin.register(User_admin)
 class Admins(UserAdmin):
     fieldsets = UserAdmin.fieldsets 
