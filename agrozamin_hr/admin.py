@@ -59,7 +59,7 @@ class UserAdmin(admin.ModelAdmin):
     actions = ['update_status']
     fieldsets = (
         (_("Shaysiy ma'lumotlar"), {
-            'fields': ("chat_id","full_name", "phone_number", "gender", "education", "age","program_language", 'extra_skill', 'cv', 'sms')}),)
+            'fields': ("chat_id","full_name", "phone_number", "gender", "education", "age","program_language", 'extra_skill', 'cv', 'sms', 'result')}),)
     
     def user(self, obj):
         return obj.full_name,
