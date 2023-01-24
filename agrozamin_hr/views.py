@@ -14,25 +14,43 @@ import os
 import random
 
 
-class UserDetailView(APIView):
-    def post(self, request):
-        serializer = UserSerializer(data=request.data)       
-        if serializer.is_valid():
-            full_name  = f"{serializer.validated_data['full_name']}"
-            first_name = full_name.split(' ')[0]
-            last_name = full_name.split(' ')[1]
-            file_format_cv  = f"{serializer.validated_data['cv']}".split('.')[-1]
-            serializer.validated_data['cv'].name = f"{first_name}_{last_name}_cv.{file_format_cv}"
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def delete(self, request):
-        users = UserModel.objects.all()
-        users.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT, data={"data":"all users deleted"})
 
-    
+class UserView(APIView):
+    def post(self, request):
+        try:
+            user = UserModel.objects.get(chat_id=request.data.get('chat_id')) 
+            serializer = UserSerializer(user, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(data={"response":"updated"},  status=status.HTTP_202_ACCEPTED)
+
+        except UserModel.DoesNotExist:
+            serializer = UserSerializer(data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                full_name  = f"{serializer.validated_data['full_name']}"
+                first_name = full_name.split(' ')[0]
+                last_name = full_name.split(' ')[1]
+                file_format_cv  = f"{serializer.validated_data['cv']}".split('.')[-1]
+                serializer.validated_data['cv'].name = f"{first_name}_{last_name}_cv.{file_format_cv}"
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserDetailView(APIView):
+    def get(self, request):
+        parameter = request.query_params.get("chat_id")
+        try:
+            user = UserModel.objects.get(chat_id=parameter)
+            serializer = UserSerializer(user)     
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except UserModel.DoesNotExist:
+            return Response(data={"response":"user does not exist"},  status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request):
+        parameter = request.query_params.get("chat_id")
+        user = UserModel.objects.get(chat_id=parameter)
+        user.delete()
+        return Response(data={"response":"user deleted"}, status=status.HTTP_200_OK)
 
 class CategoryView(generics.ListAPIView):
     queryset = Category.objects.all()

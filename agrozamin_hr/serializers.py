@@ -18,7 +18,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ('id','question','A','B','C','D','category')
+        fields = ('id','img','question','A','B','C','D','category')
 
 class ExtraCategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,6 +28,6 @@ class ExtraCategorySerializer(serializers.ModelSerializer):
 class ExtraQuetionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExtraQuestion
-        fields = ('id','question','A','B','C','D','extra_category')
+        fields = ('id','img','question','A','B','C','D','extra_category')
 
 

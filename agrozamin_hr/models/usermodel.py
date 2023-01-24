@@ -38,13 +38,14 @@ class UserModel(models.Model):
     chat_id = models.PositiveBigIntegerField(unique=True)
     full_name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=9, unique=True, validators=[validate_length])
-    gender = gender = models.CharField(max_length=10, choices=Choice.Genders.choices)
+    gender = models.CharField(max_length=10, choices=Choice.Genders.choices)
     education = models.CharField(max_length=30, choices=Choice.Education.choices)
     age = models.CharField(max_length=10, choices=Choice.Age.choices)
     program_language = models.ForeignKey(Category, on_delete=models.CASCADE)
     extra_skill=models.ManyToManyField(ExtraCategory, blank=True)
     cv = models.FileField(upload_to='cv_files')
     sms = models.BooleanField(default='False')
+    result = models.IntegerField(default=0)
 
     def __str__(self):
         return self.full_name

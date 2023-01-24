@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Question(models.Model):
+    img = models.ImageField(null=False, blank=True)
     question = models.TextField()
     A = models.CharField(max_length=200,null=True)
     B = models.CharField(max_length=200,null=True)
@@ -21,6 +22,7 @@ class Question(models.Model):
 
 
 class ExtraQuestion(models.Model):
+    img = models.ImageField(null=False, blank=True)
     question = models.TextField()
     A = models.CharField(max_length=200,null=True)
     B = models.CharField(max_length=200,null=True)
