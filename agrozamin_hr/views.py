@@ -38,11 +38,23 @@ class UserView(APIView):
 
 class UserDetailView(APIView):
     def get(self, request):
-        parameter = request.query_params.get("chat_id")
+        chat_id = request.query_params.get("chat_id")
+        phone_number = request.query_params.get("phone_number")
+        
         try:
-            user = UserModel.objects.get(chat_id=parameter)
-            serializer = UserSerializer(user)     
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            if chat_id:
+                print('chat_id')
+                user = UserModel.objects.get(chat_id=chat_id)
+                serializer = UserSerializer(user)     
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            elif phone_number:
+                print('phone')
+                user = UserModel.objects.get(phone_number=phone_number)
+                serializer = UserSerializer(user)     
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(data={"error":"ypu can send chat_id or phone_number in params!"}, status=status.HTTP_400_BAD_REQUEST)
+
         except UserModel.DoesNotExist:
             return Response(data={"response":"user does not exist"},  status=status.HTTP_404_NOT_FOUND)
 
@@ -149,22 +161,25 @@ class QuestionCheckView(APIView):
                                         "count_true":extra_true_results
                                     }
 
+        try:
+            chat_id = request.data['chat_id']
+            user_id = UserModel.objects.get(chat_id=chat_id)
 
-        chat_id = request.data['chat_id']
-        user_id = UserModel.objects.get(chat_id=chat_id)
+            all_json_data= {}
+            
+            keys = list(request.data.keys())
 
-        all_json_data= {}
+            if ("extra_questions" in keys) and ("questions" in keys):
+                    request_extra_questions(user_id,all_json_data)
+                    request_question(user_id,all_json_data)
+
+            elif "extra_questions" in keys:
+                    request_extra_questions(user_id,all_json_data)
+            elif ("questions" in keys):
+                    request_question(user_id,all_json_data)
         
-        keys = list(request.data.keys())
-
-        if ("extra_questions" in keys) and ("questions" in keys):
-                request_extra_questions(user_id,all_json_data)
-                request_question(user_id,all_json_data)
-
-        elif "extra_questions" in keys:
-                request_extra_questions(user_id,all_json_data)
-        elif ("questions" in keys):
-                request_question(user_id,all_json_data)
+        except UserModel.DoesNotExist:
+            return Response(data={"reponse":"user does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
         return Response(data=all_json_data)
 
