@@ -1,20 +1,105 @@
 {% extends "admin/base_site.html" %}
 
 {% block content %}
+
+<style>
+  /* Set additional styling options for the columns */
+      .column {
+      float: left;
+      
+      }
+
+      /* Set width length for the left, right and middle columns */
+      .left {
+      width: 20%;
+      }
+
+      .middle {
+      width: 30%;
+      margin: 30px 0px 30px 30px;
+      }
+      
+      .right {
+      width: 60%;
+      margin: 30px 0px 30px 30px;
+      }
+
+      .row:after {
+      content: "";
+      display: table;
+      clear: both;
+      }
+    
+      input{
+        margin: 0px 0px 0px 0px;
+      }
+      label{
+        margin: 0px 20px 0px 10px;
+      }
+      textarea{
+        margin: 10px 0px 10px 0px;
+      }
+
+</style>
+
 <form action="" method="post">
   {% csrf_token %}
-  {{ form.as_p }}
-<p>
-Users:
-</p> 
-  {% for order in orders %}
-    <p>
-      {{ order }}
-    </p>
-    <input type="hidden" name="_selected_action" value="{{ order.pk }}" />
-  {% endfor %}
+
+  <div class="row">
+    <div class="column left">
+        Message:
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
+          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+        </svg><br>
+        <textarea id="text" name="text" rows="10" cols="50" placeholder="Write a message ..."></textarea>
+    </div>
+    <div class="column middle">
+        Address:
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+          <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+        </svg>
+        <ul>
+          {% for address in address_list %}
+            <lo><input type="checkbox" name="address" value="{{address}}"><label>{{address}}</label></lo>
+          {% endfor %}
+        </ul>
+    </div>
+    <div class="column right">
+      Number:
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+        </svg>
+        <ul>
+          {% for number in number_list %}
+            <lo><input type="checkbox" name="number" value="{{number}}"><label>{{number.first_name}}: {{ number }}</label></lo>
+          {% endfor %}
+        </ul>
+    </div>
+  </div>
+
+  <br>
+  <div class="user">
+    Users:
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+      <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+    </svg>
+    <ul>
+      {% for order in orders %}
+      <lo>
+        <div class="user">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-check" viewBox="0 0 16 16">
+            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+            <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
+          </svg>
+          {{ order }}
+      </div>
+      </lo>
+      <input type="hidden" name="_selected_action" value="{{ order.pk }}" />
+      {% endfor %}
+    </ul> 
+  </div>
 
   <input type="hidden" name="action" value="update_status" />
-  <input type="submit" name="apply" value="Отправить"/>
+  <input type="submit" name="apply" value="Отправить"/>  
 </form>
 {% endblock %}

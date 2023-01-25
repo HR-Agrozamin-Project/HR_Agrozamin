@@ -57,7 +57,8 @@ INSTALLED_APPS = [
 
     #admin customization
     'nested_admin',
-    'admin_reorder'
+    'admin_reorder',
+    'location_field.apps.DefaultConfig',
 ]
 
 
@@ -95,7 +96,7 @@ ADMIN_REORDER = (
     
     # fourth group: UserModel, QuetionResult, ExtraQuetionResult
     {'app': 'agrozamin_hr', 'label': _("Adminstratorlar malumotlari"),
-     'models': ('agrozamin_hr.User_admin',)
+     'models': ('agrozamin_hr.User_admin', 'agrozamin_hr.Address', 'agrozamin_hr.Number')
     },)
 
 

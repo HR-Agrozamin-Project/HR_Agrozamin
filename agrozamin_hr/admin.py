@@ -6,6 +6,7 @@ from agrozamin_hr.models.categories import Category, ExtraCategory
 from agrozamin_hr.models.questions import Question, ExtraQuestion
 from agrozamin_hr.models.usermodel import UserModel, SmsHistory, QuetionResult, ExtraQuetionResult
 from agrozamin_hr.models.user_admin import User_admin
+from agrozamin_hr.models.locations_and_number import Address, Number
 from modeltranslation.admin import TranslationAdmin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
@@ -24,7 +25,8 @@ admin.site.site_header = _("HR-Agrozamin")
 admin.site.site_title = _("Agrobank ma'muriyati portali")     #"Портал администрации Агробанк")
 admin.site.index_title = _("HR-Agrozamin portaliga xush kelibsiz") #"Добро пожаловать на Портал HR-Агрозамин"
 
-
+admin.site.register(Address)
+admin.site.register(Number)
 
 @admin.register(User_admin)
 class Admins(UserAdmin):
@@ -61,10 +63,6 @@ class UserAdmin(admin.ModelAdmin):
     fieldsets = (
         (_("Shaysiy ma'lumotlar"), {
             'fields': ("chat_id","full_name", "phone_number", "gender", "education", "age","program_language", 'extra_skill', 'cv', 'sms', 'result')}),)
-    
-    def user(self, obj):
-        return obj.full_name,
-    user.allow_tags = True
 
 
     def send_message(self, text, chat_id):
@@ -73,33 +71,44 @@ class UserAdmin(admin.ModelAdmin):
         headers = {}
         response = requests.request("POST", url, headers=headers, data=payload)
 
-    def send_venue(self, chat_id):
-        latitude = 41.29490869112361
-        longitude = 69.2182447025784
+    def send_venue(self, chat_id, latitude, longitude):
         url = f"https://api.telegram.org/bot{os.environ.get('BOT_TOKEN')}/sendlocation?latitude={latitude}&longitude={longitude}&chat_id={chat_id}"
         payload={}
         headers = {}
         response = requests.request("POST", url, headers=headers, data=payload)
 
-    def send_contact(self, chat_id):
-        phone_number='+998781500088'
-        first_name='Durdona'
-        last_name='HR'
-        url = f"https://api.telegram.org/bot{os.environ.get('BOT_TOKEN')}/sendContact?chat_id={chat_id}&phone_number={phone_number}&first_name={first_name}&last_name={last_name}"
+    def send_contact(self, chat_id, phone_number, first_name, last_name):
+        url = f"https://api.telegram.org/bot{os.environ.get('BOT_TOKEN')}/sendContact?chat_id={chat_id}&phone_number=+998{phone_number}&first_name={first_name}&last_name={last_name}"
         payload={}
         headers = {}
         response = requests.request("POST", url, headers=headers, data=payload)
 
     def update_status(self, request, queryset):
-        print(request.POST)
         if 'apply' in request.POST:
-            form = TextImportForm(request.POST)
-            if form.is_valid():
-                text = form.cleaned_data.get('text')
+            print(request.POST)
+            # form = TextImportForm(request.POST)
+            if "True": #form.is_valid():
+                text = request.POST.get('text')
+                request_address = request.POST.get('address')
+                request_number = request.POST.get('number')
+                
                 for query in  queryset.all():
                     self.send_message(chat_id=query.chat_id, text=text)
-                    self.send_venue(chat_id=query.chat_id)
-                    self.send_contact(chat_id=query.chat_id)
+
+                    if request_address and request_number:
+                        address = Address.objects.get(office_name=request_address)
+                        self.send_venue(chat_id=query.chat_id, longitude=address.longitude, latitude=address.latitude)
+                        number = Number.objects.get(number=request_number)
+                        self.send_contact(chat_id=query.chat_id, phone_number=number.number, first_name=number.first_name, last_name=number.number)
+                    
+                    elif request_address:
+                        address = Address.objects.get(office_name=request_address)
+                        self.send_venue(chat_id=query.chat_id, longitude=address.longitude, latitude=address.latitude)
+
+                    elif request_number:
+                        number = Number.objects.get(number=request_number)
+                        self.send_contact(chat_id=query.chat_id, phone_number=number.number, first_name=number.first_name, last_name=number.number)
+                    
                     queryset.update(sms='True')
                     SmsHistory.objects.create(user=query, text=text, data=datetime.now())
                     
@@ -107,11 +116,11 @@ class UserAdmin(admin.ModelAdmin):
                               "Send message to {} users".format(queryset.count()))
             return HttpResponseRedirect(request.get_full_path())
 
-        form = TextImportForm()
-        data = {'form':form, 'orders':queryset}
-        return render(request,
-                      'admin/order_intermediate.html',
-                      data)
+        address_list = Address.objects.all()
+        number_list = Number.objects.all()
+
+        data = {'orders':queryset, "address_list":address_list, "number_list":number_list}
+        return render(request, 'admin/order_intermediate.html', data)
 
     update_status.short_description = _("Habar yuborish")
 

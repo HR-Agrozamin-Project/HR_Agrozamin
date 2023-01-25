@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-10 11:55+0500\n"
+"POT-Creation-Date: 2023-01-25 18:10+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,24 +20,24 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\agrozamin_hr\admin.py:20
+#: .\agrozamin_hr\admin.py:24
 #, fuzzy
 msgid "HR-Agrozamin"
 msgstr "HR-Агрозамин"
 
-#: .\agrozamin_hr\admin.py:21
+#: .\agrozamin_hr\admin.py:25
 msgid "Agrobank ma'muriyati portali"
 msgstr "Портал администрации Агробанк"
 
-#: .\agrozamin_hr\admin.py:22
+#: .\agrozamin_hr\admin.py:26
 msgid "HR-Agrozamin portaliga xush kelibsiz"
 msgstr "Добро пожаловать на Портал HR-Агрозамин"
 
-#: .\agrozamin_hr\admin.py:51
+#: .\agrozamin_hr\admin.py:64
 msgid "Shaysiy ma'lumotlar"
 msgstr "Персональные данные"
 
-#: .\agrozamin_hr\admin.py:98
+#: .\agrozamin_hr\admin.py:125
 msgid "Habar yuborish"
 msgstr "Отправить сообщение"
 
@@ -57,19 +57,35 @@ msgstr "Дополнительная категория"
 msgid "Qo'shimcha kategoriyalar"
 msgstr "Дополнительные категории"
 
-#: .\agrozamin_hr\models\questions.py:19
+#: .\agrozamin_hr\models\locations_and_number.py:14
+msgid "Manzil"
+msgstr "Адрес"
+
+#: .\agrozamin_hr\models\locations_and_number.py:15
+msgid "Manzillar"
+msgstr "Адреса"
+
+#: .\agrozamin_hr\models\locations_and_number.py:27
+msgid "Telefon raqam"
+msgstr "Номер телефона"
+
+#: .\agrozamin_hr\models\locations_and_number.py:28
+msgid "Telefon raqamlar"
+msgstr "Телефонные номера"
+
+#: .\agrozamin_hr\models\questions.py:20
 msgid "Savol"
 msgstr "Вопрос"
 
-#: .\agrozamin_hr\models\questions.py:20
+#: .\agrozamin_hr\models\questions.py:21
 msgid "Savollar"
 msgstr "Вопросы"
 
-#: .\agrozamin_hr\models\questions.py:36
+#: .\agrozamin_hr\models\questions.py:38
 msgid "Qo'shimcha savol"
 msgstr "Дополнительный вопрос"
 
-#: .\agrozamin_hr\models\questions.py:37
+#: .\agrozamin_hr\models\questions.py:39
 msgid "Qo'shimcha savollar"
 msgstr "Дополнительные вопросы"
 
@@ -113,27 +129,35 @@ msgstr ""
 msgid "PhD"
 msgstr "PhD"
 
-#: .\agrozamin_hr\models\usermodel.py:53
+#: .\agrozamin_hr\models\usermodel.py:54
 msgid "Foydalanuvchi"
 msgstr "Пользователь"
 
-#: .\agrozamin_hr\models\usermodel.py:54
+#: .\agrozamin_hr\models\usermodel.py:55
 msgid "Foydalanuvchilar"
 msgstr "Пользователи"
 
-#: .\conf\settings.py:80
+#: .\agrozamin_hr\models\usermodel.py:64
+msgid "SMS"
+msgstr "SMS"
+
+#: .\agrozamin_hr\models\usermodel.py:65
+msgid "SMSlar"
+msgstr "SMS"
+
+#: .\conf\settings.py:83
 msgid "Kategoriya va savollar"
 msgstr "Категория и вопросы"
 
-#: .\conf\settings.py:85
+#: .\conf\settings.py:88
 msgid "Qo'shimcha kategoriya va qo'shimcha savollar"
 msgstr "Дополнительная категория и дополнительные вопросы"
 
-#: .\conf\settings.py:90
+#: .\conf\settings.py:93
 msgid "Kandedatlar malumotlari"
 msgstr "Информация об администраторе"
 
-#: .\conf\settings.py:95
+#: .\conf\settings.py:98
 msgid "Adminstratorlar malumotlari"
 msgstr "Информация об администраторе"
 

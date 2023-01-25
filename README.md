@@ -25,3 +25,5 @@ server {
 }
 
 sudo ln -s /etc/nginx/sites-available/HR_Agrozamin /etc/nginx/sites-enabled
+
+
