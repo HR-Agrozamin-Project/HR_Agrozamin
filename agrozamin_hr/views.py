@@ -43,17 +43,15 @@ class UserDetailView(APIView):
         
         try:
             if chat_id:
-                print('chat_id')
                 user = UserModel.objects.get(chat_id=chat_id)
                 serializer = UserSerializer(user)     
                 return Response(serializer.data, status=status.HTTP_200_OK)
             elif phone_number:
-                print('phone')
                 user = UserModel.objects.get(phone_number=phone_number)
                 serializer = UserSerializer(user)     
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
-                return Response(data={"error":"ypu can send chat_id or phone_number in params!"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(data={"error":"you can send chat_id or phone_number in params!"}, status=status.HTTP_400_BAD_REQUEST)
 
         except UserModel.DoesNotExist:
             return Response(data={"response":"user does not exist"},  status=status.HTTP_404_NOT_FOUND)
@@ -90,7 +88,6 @@ class ExrtaQuestionView(APIView):
         
 
 class QuestionCheckView(APIView):
-
     def delete(self, request):
         chat_id = request.data['chat_id']
         user_id = UserModel.objects.get(chat_id=chat_id)
@@ -99,7 +96,7 @@ class QuestionCheckView(APIView):
         question_results.delete()
         extra_question_results = ExtraQuetionResult.objects.filter(user=user_id)
         extra_question_results.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT, data={"data":"all users deleted"})
+        return Response(status=status.HTTP_204_NO_CONTENT, data={"data":"all users test archives deleted"})
 
     def get(self, request):
 
@@ -172,15 +169,32 @@ class QuestionCheckView(APIView):
             if ("extra_questions" in keys) and ("questions" in keys):
                     request_extra_questions(user_id,all_json_data)
                     request_question(user_id,all_json_data)
+                    extra_ques_count = all_json_data.get('extra_questions')['count_questions']
+                    extra_ques_count_true = all_json_data.get('extra_questions')['count_true']
+                    ques_count = all_json_data.get('questions')['count_questions']
+                    ques_count_true = all_json_data.get('questions')['count_true']
 
             elif "extra_questions" in keys:
                     request_extra_questions(user_id,all_json_data)
+                    extra_ques_count = all_json_data.get('extra_questions')['count_questions']
+                    extra_ques_count_true = all_json_data.get('extra_questions')['count_true']
+                    ques_count = 0
+                    ques_count_true = 0
+                    
             elif ("questions" in keys):
                     request_question(user_id,all_json_data)
-        
+                    ques_count = all_json_data.get('questions')['count_questions']
+                    ques_count_true = all_json_data.get('questions')['count_true']
+                    extra_ques_count = 0
+                    extra_ques_count_true = 0
+                    
+            
         except UserModel.DoesNotExist:
             return Response(data={"reponse":"user does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
+        total_result = (ques_count_true + extra_ques_count_true)/(ques_count + extra_ques_count)*100
+        user_id.result=round(total_result)
+        user_id.save()
         return Response(data=all_json_data)
 
 
