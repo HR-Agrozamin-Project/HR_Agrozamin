@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     #admin customization
     'nested_admin',
     'admin_reorder',
-    'location_field.apps.DefaultConfig',
 ]
 
 
