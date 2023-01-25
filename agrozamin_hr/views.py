@@ -193,7 +193,7 @@ class QuestionCheckView(APIView):
             return Response(data={"reponse":"user does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
         total_result = (ques_count_true + extra_ques_count_true)/(ques_count + extra_ques_count)*100
-        user_id.result=round(total_result)
+        user_id.result=total_result
         user_id.save()
         return Response(data=all_json_data)
 

@@ -45,7 +45,7 @@ class UserModel(models.Model):
     extra_skill=models.ManyToManyField(ExtraCategory, blank=True)
     cv = models.FileField(upload_to='cv_files')
     sms = models.BooleanField(default='False')
-    result = models.IntegerField(default=0)
+    result = models.DecimalField(default=0, max_digits=4, decimal_places=1)
 
     def __str__(self):
         return self.full_name

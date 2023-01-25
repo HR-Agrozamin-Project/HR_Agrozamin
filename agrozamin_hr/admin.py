@@ -91,6 +91,7 @@ class UserAdmin(admin.ModelAdmin):
         response = requests.request("POST", url, headers=headers, data=payload)
 
     def update_status(self, request, queryset):
+        print(request.POST)
         if 'apply' in request.POST:
             form = TextImportForm(request.POST)
             if form.is_valid():
