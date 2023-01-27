@@ -1,5 +1,4 @@
 from django.contrib import admin
-import nested_admin
 from agrozamin_hr.models.usermodel import UserModel
 from django.utils.translation import gettext_lazy as _
 from agrozamin_hr.models.categories import Category, ExtraCategory
@@ -35,17 +34,18 @@ class Admins(UserAdmin):
 class SmsHistoryAdmin(admin.TabularInline):
     model = SmsHistory
     extra = 0
-    group_fieldsets = True
+    classes = ['collapse',]
 
 class QuetionResultInline(admin.TabularInline):
     model = QuetionResult
     extra = 0
-    group_fieldsets = True
+    classes = ['collapse',]
 
 class ExtraQuetionResultInline(admin.TabularInline):
     model = ExtraQuetionResult
     extra = 0
-    group_fieldsets = True
+    classes = ['collapse',]
+
 
 class TextImportForm(forms.Form):
     text = forms.CharField(max_length=500, widget=forms.Textarea)
