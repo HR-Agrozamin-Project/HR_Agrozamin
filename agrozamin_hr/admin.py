@@ -57,7 +57,7 @@ class UserAdmin(admin.ModelAdmin):
     list_filter = ['program_language', 'extra_skill', 'sms']
     list_display_links = ("id", 'full_name')
     list_display = ("id", 'full_name', "chat_id", "phone_number", "gender", "education", "age","program_language", 'cv', 'sms', 'result')
-    raw_id_fields = ['program_language', 'extra_skill']
+    # raw_id_fields = ['program_language', 'extra_skill']
     list_per_page = 10
     actions = ['update_status']
     fieldsets = (

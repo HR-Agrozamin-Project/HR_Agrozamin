@@ -79,3 +79,4 @@ class ExtraQuetionResult(models.Model):
     user_answer = models.CharField(max_length=20)
     result = models.CharField(max_length=20)
 
+    
