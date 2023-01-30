@@ -15,7 +15,7 @@ from django import forms
 import requests
 import os
 from django.http import HttpResponseRedirect
-
+from .admin_mixins import ExportAsCSVMixin
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -51,15 +51,15 @@ class TextImportForm(forms.Form):
     text = forms.CharField(max_length=500, widget=forms.Textarea)
 
 @admin.register(UserModel)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(admin.ModelAdmin, ExportAsCSVMixin):
     inlines = [SmsHistoryAdmin, QuetionResultInline, ExtraQuetionResultInline]
     group_fieldsets = True 
     list_filter = ['program_language', 'extra_skill', 'sms']
     list_display_links = ("id", 'full_name')
-    list_display = ("result","id", 'full_name', "chat_id", "phone_number", "gender", "education", "age","program_language", 'cv', 'sms')
+    list_display = ("result","id", 'full_name', "chat_id", "phone_number", "gender", "education", "age","program_language", 'cv', 'sms', 'result')
     # raw_id_fields = ['program_language', 'extra_skill']
     list_per_page = 10
-    actions = ['update_status']
+    actions = ['update_status', 'export_csv']
     fieldsets = (
         (_("Shaysiy ma'lumotlar"), {
             'fields': ("chat_id","full_name", "phone_number", "gender", "education", "age","program_language", 'extra_skill', 'cv', 'sms', 'result')}),)
@@ -126,29 +126,33 @@ class UserAdmin(admin.ModelAdmin):
 
 
 @admin.register(Question)
-class QuesModelAdmin(TranslationAdmin):
+class QuesModelAdmin(TranslationAdmin, ExportAsCSVMixin):
     list_display = ("id",'img','question','A','B','C','D','ans', 'category')
     search_fields = ("question",)
     list_filter = ('category', )
     list_per_page = 10
+    actions = ['export_csv']
 
 @admin.register(Category)
-class CategiryModelAdmin(admin.ModelAdmin):
+class CategiryModelAdmin(admin.ModelAdmin, ExportAsCSVMixin):
     list_display = ("id",'category_name',)
     search_fields = ('extra_category_name',)
     list_per_page = 10
+    actions = ['export_csv']
 
 @admin.register(ExtraQuestion)
-class ExtraQuestionAdmin(TranslationAdmin):
+class ExtraQuestionAdmin(TranslationAdmin, ExportAsCSVMixin):
     list_display = ("id",'img','question','A','B','C','D','ans', 'extra_category')
     search_fields = ('question',)
     list_filter = ['extra_category']
     list_per_page = 10
+    actions = ['export_csv']
 
 @admin.register(ExtraCategory)
-class ExtraCategoryAdmin(admin.ModelAdmin):
+class ExtraCategoryAdmin(admin.ModelAdmin, ExportAsCSVMixin):
     list_display = ("id",'extra_category_name',)
     search_fields = ('extra_category_name',)
     list_per_page = 10
+    actions = ['export_csv']
 
 
