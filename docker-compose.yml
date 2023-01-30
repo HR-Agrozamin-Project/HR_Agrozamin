@@ -30,9 +30,9 @@ services:
       image: dpage/pgadmin4
       container_name: pgadmin
       depends_on:
-        - db
+        - pgdb
       ports:
-        - "5051:80"
+        - "8080:80"
       environment:
         PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
         PGADMIN_DEFAULT_PASSWORD: root
