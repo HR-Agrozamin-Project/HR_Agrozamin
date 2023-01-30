@@ -73,9 +73,18 @@ class QuestionView(APIView):
         serializer = QuestionSerializer(questions, many=True)
         return Response(serializer.data)
 
-class ExtraCategoryView(generics.ListAPIView):
-    queryset = ExtraCategory.objects.all()
-    serializer_class = ExtraCategorySerializer
+# class ExtraCategoryView(generics.ListAPIView):
+#     queryset = ExtraCategory.objects.all()
+#     serializer_class = ExtraCategorySerializer
+
+class ExtraCategoryView(APIView):
+    def get(self, request):
+        user_ip = request.META.get('REMOTE_ADDR')
+        user_agent = request.META.get("HTTP_USER_AGENT")
+        queryset = ExtraCategory.objects.all()
+        serializer = ExtraCategorySerializer(queryset, many=True)
+        return Response(data={"data":serializer.data, "IP":user_ip, "user_agent":user_agent})
+    
     
 class ExrtaQuestionView(APIView):
     def get(self, request):
