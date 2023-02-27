@@ -13,8 +13,8 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: 34.225.44.100
-        USERNAME: root
-        key: ${{ secrets.  }}
+        USERNAME: ubuntu
+        key: ${{ secrets.NEW_KEY }}
         PORT: 22
         script: |
           cd ~
