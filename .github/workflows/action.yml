@@ -12,9 +12,9 @@ jobs:
     - name: Executing remote command
       uses: appleboy/ssh-action@master
       with:
-        host: 139.162.159.187
+        host: 34.225.44.100
         USERNAME: root
-        PASSWORD: 5Noyabr2022
+        key: ${{ secrets.  }}
         PORT: 22
         script: |
           cd ~

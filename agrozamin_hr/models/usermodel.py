@@ -5,7 +5,7 @@ from agrozamin_hr.models.questions import Question, ExtraQuestion
 from django.utils.translation import gettext_lazy as _
 import os
 
-def validate_length(value,length=9):
+def     validate_length(value,length=9):
     if value.isdigit():
         if len(str(value))!=length:
             raise ValidationError(f"Ошибка: Номер должен содержать {length} цифр.")
